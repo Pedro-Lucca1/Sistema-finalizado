@@ -1,1 +1,2 @@
-# Sistema-finalizado
+📋 Sobre o Projeto
+O Sistema de Gestão de Vendas foi desenvolvido como projeto para a máteria de desenvolvimento web para o curso de sistema de informação ele oferece uma solução completa para controle de estoque, registro de compras de fornecedores e vendas para clientes, com atualização automática de quantidades e geração de relatórios.
