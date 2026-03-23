@@ -1,7 +1,22 @@
 # 📋 Sobre o Projeto
-O Sistema de Gestão de Vendas foi desenvolvido como projeto para a máteria de desenvolvimento web para o curso de sistema de informação ele oferece uma solução completa para controle de estoque, registro de compras de fornecedores e vendas para clientes, com atualização automática de quantidades e geração de relatórios.
+O Sistema de Gestão de Vendas foi desenvolvido pelo alumo Pedro Lucca Pires Lima e Silva como projeto para a máteria de desenvolvimento web para o curso de sistema de informação ele oferece uma solução completa para controle de estoque, registro de compras de fornecedores e vendas para clientes, com atualização automática de quantidades e geração de relatórios.
+
+# Tecnologias Utilizadas - Explicação Simples
 
 
+# 🎨 Front-End (O que o usuário vê)
+HTML5
+
+CSS3
+
+Django Templates
+
+# ⚙️ Back-End
+Django
+
+Python
+
+SQLite
 
 
 
