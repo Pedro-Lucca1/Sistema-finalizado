@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Nova Compra{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h2>Nova Compra</h2>
+        <p>Registre uma nova compra de fornecedor</p>
+    </div>
+</div>
+
+<div class="form-container" style="max-width: 600px; margin: 0 auto;">
+    <div class="card">
+        <form method="post">
+            {% csrf_token %}
+            
+            {% for field in form %}
+            <div class="form-group">
+                <label>{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                <small class="error">{{ field.errors.0 }}</small>
+                {% endif %}
+            </div>
+            {% endfor %}
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Continuar</button>
+                <a href="{% url 'compras:lista' %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

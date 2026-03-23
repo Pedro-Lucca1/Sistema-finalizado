@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="alert-container">
+
+<div style="margin-bottom:20px;">
+<h2 style="color: var(--danger);">Remover Registro</h2>
+
+<p style="color: var(--secondary); font-size:0.9rem;">
+Esta operação irá excluir permanentemente o item selecionado do sistema.
+</p>
+</div>
+
+
+<div class="alert-box" style="
+padding:25px;
+border-radius:10px;
+background:var(--light);
+text-align:center;
+">
+
+<p style="color:var(--secondary); font-size:0.85rem; margin-bottom:8px;">
+Registro selecionado
+</p>
+
+<h3 style="color:var(--primary);">
+{{ object.nome }}
+</h3>
+
+</div>
+
+
+<form method="post" style="margin-top:25px;">
+
+{% csrf_token %}
+
+<div class="form-actions">
+
+<button type="submit" class="btn btn-danger">
+Confirmar Exclusão
+</button>
+
+<button 
+type="button" 
+class="btn btn-secondary"
+onclick="history.back()"
+>
+Voltar
+</button>
+
+</div>
+
+</form>
+
+
+<div style="
+margin-top:30px;
+padding:15px;
+background:var(--light);
+border-radius:8px;
+">
+
+<p style="font-size:0.85rem; color:var(--secondary); margin:0;">
+Após confirmar, o registro será removido definitivamente do sistema e não poderá ser recuperado.
+Certifique-se de que deseja realmente realizar esta ação.
+</p>
+
+</div>
+
+</div>
+
+{% endblock %}

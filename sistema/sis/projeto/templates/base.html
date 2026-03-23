@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flow Business | Gestão</title>
+
+<style>
+/* VARIÁVEIS DE CORES - TEMA MODERNO AZUL ESCURO */
+:root {
+    --primary: #0a1929;
+    --primary-light: #1e3a5f;
+    --secondary: #5b8c9c;
+    --accent: #64b5f6;
+    --success: #4caf50;
+    --warning: #ff9800;
+    --danger: #f44336;
+    --dark: #0f172a;
+    --light: #f8fafc;
+    --gray: #94a3b8;
+    --white: #ffffff;
+    --card-bg: #ffffff;
+    --border: #e2e8f0;
+    --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* RESET MODERNO */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--light);
+    color: var(--dark);
+    line-height: 1.5;
+    min-height: 100vh;
+}
+
+/* LAYOUT PRINCIPAL - HORIZONTAL */
+.app-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR MINIMALISTA */
+.sidebar {
+    width: 280px;
+    background: var(--primary);
+    color: var(--white);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.08);
+    position: relative;
+    z-index: 10;
+}
+
+.sidebar-header {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-header a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sidebar-header a::before {
+    content: "✦";
+    font-size: 2rem;
+    color: var(--accent);
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar-nav a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sidebar-nav a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+    transform: translateX(4px);
+}
+
+.sidebar-nav a::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.sidebar-nav a:hover::before {
+    opacity: 1;
+}
+
+/* CONTEÚDO PRINCIPAL */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--light);
+}
+
+/* TOPBAR CLEAN */
+.topbar {
+    background: var(--white);
+    padding: 1.25rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+}
+
+.page-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.page-title::before {
+    content: "●";
+    color: var(--accent);
+    font-size: 1.5rem;
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-weight: 600;
+    box-shadow: var(--shadow-sm);
+}
+
+/* PAINEL - CARDS CONTEINER */
+.painel {
+    padding: 2rem 2.5rem;
+    flex: 1;
+}
+
+/* CARDS MODERNOS */
+.card {
+    background: var(--card-bg);
+    border-radius: 24px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: var(--shadow);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.card-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--dark);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* TABELAS MODERNAS */
+.table-container {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    padding: 1rem 1rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid var(--border);
+}
+
+td {
+    padding: 1rem 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--dark);
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background: var(--light);
+}
+
+/* FORMULÁRIOS MODERNOS */
+.form-card {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 2rem;
+    max-width: 700px;
+    margin: 0 auto;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--dark);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.2s;
+    background: var(--white);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(100, 181, 246, 0.1);
+}
+
+/* BOTÕES ESTILIZADOS */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--white);
+    color: var(--dark);
+    border: 2px solid var(--border);
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: var(--white);
+    border: 2px solid var(--primary);
+}
+
+.btn-primary:hover {
+    background: var(--primary-light);
+    border-color: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-success {
+    background: var(--success);
+    color: var(--white);
+    border: 2px solid var(--success);
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: var(--white);
+    border: 2px solid var(--danger);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+}
+
+.btn-outline:hover {
+    background: var(--primary);
+    color: var(--white);
+}
+
+/* GRID DASHBOARD */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: all 0.3s;
+}
+
+.stat-card:hover {
+    box-shadow: var(--shadow);
+    transform: translateY(-4px);
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.2;
+}
+
+.stat-trend {
+    font-size: 0.875rem;
+    color: var(--success);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* ALERTAS MODERNOS */
+.alert {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--primary);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.alert-danger {
+    border-left-color: var(--danger);
+}
+
+.alert-warning {
+    border-left-color: var(--warning);
+}
+
+.alert-success {
+    border-left-color: var(--success);
+}
+
+/* AÇÕES DE FORMULÁRIO */
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--border);
+}
+
+.form-actions .btn {
+    flex: 1;
+}
+
+/* UTILITÁRIOS */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.mt-3 { margin-top: 1.5rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.flex { display: flex; }
+.items-center { align-items: center; }
+.gap-2 { gap: 0.5rem; }
+.gap-3 { gap: 1rem; }
+
+/* BADGES */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 40px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: var(--light);
+    color: var(--dark);
+}
+
+.badge-success {
+    background: rgba(76, 175, 80, 0.1);
+    color: var(--success);
+}
+
+.badge-warning {
+    background: rgba(255, 152, 0, 0.1);
+    color: var(--warning);
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 768px) {
+    .app-wrapper {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        padding: 1rem;
+    }
+    
+    .painel {
+        padding: 1.5rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="app-wrapper">
+
+<!-- SIDEBAR REDESIGNADA -->
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <a href="{% url 'home' %}">Sistema de gestão</a>
+    </div>
+    
+    <nav class="sidebar-nav">
+        <a href="{% url 'lista_clientes' %}">Clientes</a>
+        <a href="{% url 'lista_produtos' %}">Produtos</a>
+        <a href="{% url 'lista_fornecedores' %}">Fornecedores</a>
+        <a href="{% url 'compras:lista' %}" style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+        🛒 Compras
+    </a>
+    <a href="{% url 'vendas:lista' %}">
+        💰 Vendas
+    </a>
+    
+        
+        
+    </nav>
+    
+    <div style="margin-top: auto; padding-top: 2rem;">
+        <div style="background: rgba(255,255,255,0.05); border-radius: 16px; padding: 1rem;">
+            <div style="font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-bottom: 0.5rem;">SISTEMA DE GESTÃO</div>
+            <div style="font-size: 0.875rem; color: white;">© IFbaiano</div>
+        </div>
+    </div>
+</aside>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<main class="main-content">
+    
+    <!-- TOPBAR REDESIGNADA -->
+    <header class="topbar">
+        <div class="page-title">
+            {% block page_title %}Dashboard{% endblock %}
+        </div>
+        
+        <div class="user-menu">
+            <span style="color: var(--gray);">Admin</span>
+            <div class="user-avatar">AD</div>
+        </div>
+    </header>
+    
+    <!-- PAINEL DE CONTEÚDO -->
+    <div class="painel">
+        {% block content %}
+        <!-- CONTEÚDO DINÂMICO HERDADO -->
+        {% endblock %}
+    </div>
+    
+</main>
+
+</div>
+</body>
+</html>

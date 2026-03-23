@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h2>Clientes Registrados</h2>
+        <p style="color: var(--secondary); font-size:0.9rem;">
+            Visualize e gerencie os clientes cadastrados no sistema.
+        </p>
+    </div>
+
+    <a href="{% url 'criar_clientes' %}" class="btn btn-success">
+        + Adicionar Cliente
+    </a>
+</div>
+
+
+<div style="margin-top:20px;">
+
+<table>
+
+<thead>
+<tr>
+<th>Cliente</th>
+<th>Email</th>
+<th>Data de Cadastro</th>
+<th>Telefone</th>
+<th class="text-center">Operações</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for c in clientes %}
+
+<tr>
+
+<td>
+<strong>{{ c.nome }}</strong>
+</td>
+
+<td>
+{{ c.email }}
+</td>
+
+<td>
+{{ c.data|date:"d/m/Y" }}
+</td>
+
+<td>
+{{ c.telefone }}
+</td>
+
+<td class="text-center">
+
+<div style="display:flex; justify-content:center; gap:8px;">
+
+<a href="{% url 'editar_clientes' c.pk %}" class="btn btn-warning">
+Editar
+</a>
+
+<a href="{% url 'excluir_clientes' c.pk %}" class="btn btn-danger">
+Excluir
+</a>
+
+</div>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="5" class="text-center" style="padding:25px;">
+Nenhum cliente foi cadastrado até o momento.
+</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<div style="
+margin-top:35px;
+padding:18px;
+background:var(--light);
+border-radius:8px;
+">
+
+<p style="color:var(--secondary); font-size:0.9rem; margin:0;">
+Nesta área é possível acompanhar todos os clientes cadastrados.
+Utilize as opções disponíveis para editar informações ou remover registros quando necessário.
+</p>
+
+</div>
+
+{% endblock %}

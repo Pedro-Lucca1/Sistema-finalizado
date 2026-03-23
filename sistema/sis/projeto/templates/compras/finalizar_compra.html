@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Finalizar Compra{% endblock %}
+
+{% block content %}
+
+<div class="page-header" style="border-bottom: 2px solid var(--light); padding-bottom: 12px; margin-bottom: 18px;">
+    <h2 style="margin: 0;">Finalizar Compra</h2>
+</div>
+
+<div style="max-width: 500px; margin: 0 auto;">
+    <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center;">
+        
+        <div style="font-size: 3rem; margin-bottom: 20px;">📦</div>
+        
+        <h3 style="color: var(--primary); margin-bottom: 20px;">Compra: {{ compra.numero_nota }}</h3>
+        
+        <div style="text-align: left; margin: 20px 0; padding: 15px; background: var(--light); border-radius: 8px;">
+            <p><strong>Fornecedor:</strong> {{ compra.fornecedor.nome }}</p>
+            <p><strong>Data da Compra:</strong> {{ compra.data_compra|date:"d/m/Y" }}</p>
+            {% if compra.data_entrega %}
+            <p><strong>Data de Entrega:</strong> {{ compra.data_entrega|date:"d/m/Y" }}</p>
+            {% endif %}
+            <hr style="margin: 10px 0; border-color: var(--border);">
+            <p><strong>Valor Total:</strong> <span style="font-size: 1.2rem; color: var(--success);">R$ {{ compra.valor_total|floatformat:2 }}</span></p>
+        </div>
+        
+        <div style="margin: 20px 0; padding: 10px; background: #fff3cd; border-left: 4px solid #ffc107; text-align: left;">
+            <small style="color: #856404;">
+                ⚠️ Ao finalizar a compra, o estoque será atualizado e não será possível alterar os itens.
+            </small>
+        </div>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="submit" style="flex: 1; background: #2ecc71; color: white; padding: 12px; border: none; border-radius: 5px; cursor: pointer; font-weight: 600;">
+                    ✅ Confirmar Finalização
+                </button>
+                <a href="{% url 'compras:adicionar_itens' compra.id %}" style="flex: 1; background: var(--secondary); color: white; padding: 12px; border-radius: 5px; text-align: center; text-decoration: none; font-weight: 600;">
+                    ↩️ Voltar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h2>Produtos Cadastrados</h2>
+        <p style="color: var(--secondary); font-size:0.9rem;">
+            Gerencie os produtos disponíveis no sistema.
+        </p>
+    </div>
+
+    <a href="{% url 'criar_produtos' %}" class="btn btn-success">
+        + Adicionar Produto
+    </a>
+</div>
+
+
+<div style="margin-top:20px;">
+
+<table>
+
+<thead>
+<tr>
+<th>Produto</th>
+<th>Preço</th>
+<th>Descrição</th>
+<th>Estoque</th>
+<th>Validade</th>
+<th class="text-center">Operações</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for p in produtos %}
+
+<tr>
+
+<td>
+<strong>{{ p.nome }}</strong>
+</td>
+
+<td>
+R$ {{ p.preco }}
+</td>
+
+<td style="max-width:220px;">
+{{ p.descricao }}
+</td>
+
+<td>
+{{ p.quantidade }}
+</td>
+
+<td>
+{{ p.validade|date:"d/m/Y" }}
+</td>
+
+<td class="text-center">
+
+<div style="display:flex; justify-content:center; gap:8px;">
+
+<a href="{% url 'editar_produtos' p.pk %}" class="btn btn-warning">
+Editar
+</a>
+
+<a href="{% url 'excluir_produtos' p.pk %}" class="btn btn-danger">
+Excluir
+</a>
+
+</div>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="6" class="text-center" style="padding:25px;">
+Nenhum produto registrado até o momento.
+</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<div style="
+margin-top:35px;
+padding:18px;
+background:var(--light);
+border-radius:8px;
+">
+
+<p style="color:var(--secondary); font-size:0.9rem; margin:0;">
+Utilize esta seção para acompanhar todos os produtos cadastrados.
+Você pode editar informações ou remover produtos quando necessário.
+</p>
+
+</div>
+
+{% endblock %}

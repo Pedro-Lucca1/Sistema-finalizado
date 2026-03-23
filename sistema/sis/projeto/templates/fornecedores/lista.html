@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h2>Fornecedores Registrados</h2>
+        <p style="color: var(--secondary); font-size:0.9rem;">
+            Consulte e gerencie os fornecedores cadastrados no sistema.
+        </p>
+    </div>
+
+    <a href="{% url 'criar_fornecedores' %}" class="btn btn-success">
+        + Adicionar Fornecedor
+    </a>
+</div>
+
+
+<div style="margin-top:20px;">
+
+<table>
+
+<thead>
+<tr>
+<th>Fornecedor</th>
+<th>Email de Contato</th>
+<th>Telefone</th>
+<th class="text-center">Operações</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for f in fornecedores %}
+
+<tr>
+
+<td>
+<strong>{{ f.nome }}</strong>
+</td>
+
+<td>
+{{ f.email }}
+</td>
+
+<td>
+{{ f.telefone }}
+</td>
+
+<td class="text-center">
+
+<div style="display:flex; justify-content:center; gap:8px;">
+
+<a href="{% url 'editar_fornecedores' f.pk %}" class="btn btn-warning">
+Editar
+</a>
+
+<a href="{% url 'excluir_fornecedores' f.pk %}" class="btn btn-danger">
+Excluir
+</a>
+
+</div>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="4" class="text-center" style="padding:25px;">
+Nenhum fornecedor foi registrado até o momento.
+</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<div style="
+margin-top:35px;
+padding:18px;
+background:var(--light);
+border-radius:8px;
+">
+
+<p style="color:var(--secondary); font-size:0.9rem; margin:0;">
+Esta seção permite visualizar e administrar os fornecedores vinculados ao sistema.
+Utilize as opções disponíveis para editar ou remover registros conforme necessário.
+</p>
+
+</div>
+
+{% endblock %}

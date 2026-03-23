@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<!-- HEADER DO DASHBOARD MODERNO -->
+<div class="flex items-center justify-between mb-3">
+    <div>
+        <h1 style="font-size: 2rem; font-weight: 700; color: var(--dark); letter-spacing: -0.02em; margin-bottom: 0.25rem;">
+            Visão Geral
+        </h1>
+        <p style="color: var(--gray); font-size: 0.95rem;">
+            Acompanhe os principais indicadores do seu negócio em tempo real
+        </p>
+    </div>
+    <div class="badge" style="background: var(--accent); color: var(--white); padding: 0.5rem 1rem;">
+        Atualizado agora
+    </div>
+</div>
+
+<!-- STATS GRID MODERNO -->
+<div class="stats-grid">
+
+    <div class="stat-card">
+        <span class="stat-label">Total de Clientes</span>
+        <div class="stat-value">{{ total_clientes }}</div>
+        <div class="stat-trend">
+            <span>▲</span> 
+            <span>{{ total_clientes|default:"0" }} ativos</span>
+        </div>
+        <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--gray);">
+            últimos 30 dias
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <span class="stat-label">Produtos em Estoque</span>
+        <div class="stat-value">{{ total_produtos }}</div>
+        <div class="stat-trend" style="color: var(--warning);">
+            <span>▼</span>
+            <span>{{ total_produtos|default:"0" }} itens</span>
+        </div>
+        <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--gray);">
+            em catálogo
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <span class="stat-label">Fornecedores</span>
+        <div class="stat-value">{{ total_fornecedores }}</div>
+        <div class="stat-trend" style="color: var(--accent);">
+            <span>◆</span>
+            <span>parceiros ativos</span>
+        </div>
+        <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--gray);">
+            {{ total_fornecedores|default:"0" }} cadastrados
+        </div>
+    </div>
+
+</div>
+
+<!-- GRÁFICOS E INSIGHTS (SIMULADO) -->
+<div class="stats-grid" style="margin-top: 2rem;">
+    <div class="card" style="grid-column: span 2;">
+        <div class="card-header">
+            <span class="card-title">Atividade Recente</span>
+            <span class="badge">últimos 7 dias</span>
+        </div>
+        <div style="height: 120px; display: flex; align-items: flex-end; gap: 12px; padding: 1rem 0;">
+            <div style="flex: 1; height: 80px; background: linear-gradient(to top, var(--accent) 0%, var(--accent) 60%, transparent 60%); border-radius: 12px 12px 4px 4px;"></div>
+            <div style="flex: 1; height: 100px; background: linear-gradient(to top, var(--accent) 0%, var(--accent) 75%, transparent 75%); border-radius: 12px 12px 4px 4px;"></div>
+            <div style="flex: 1; height: 60px; background: linear-gradient(to top, var(--accent) 0%, var(--accent) 45%, transparent 45%); border-radius: 12px 12px 4px 4px;"></div>
+            <div style="flex: 1; height: 90px; background: linear-gradient(to top, var(--accent) 0%, var(--accent) 70%, transparent 70%); border-radius: 12px 12px 4px 4px;"></div>
+            <div style="flex: 1; height: 70px; background: linear-gradient(to top, var(--accent) 0%, var(--accent) 55%, transparent 55%); border-radius: 12px 12px 4px 4px;"></div>
+            <div style="flex: 1; height: 110px; background: linear-gradient(to top, var(--accent) 0%, var(--accent) 85%, transparent 85%); border-radius: 12px 12px 4px 4px;"></div>
+            <div style="flex: 1; height: 85px; background: linear-gradient(to top, var(--accent) 0%, var(--accent) 65%, transparent 65%); border-radius: 12px 12px 4px 4px;"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 0.5rem; color: var(--gray); font-size: 0.75rem;">
+            <span>Seg</span>
+            <span>Ter</span>
+            <span>Qua</span>
+            <span>Qui</span>
+            <span>Sex</span>
+            <span>Sáb</span>
+            <span>Dom</span>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">Distribuição</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.875rem; margin-bottom: 4px;">
+                    <span>Clientes</span>
+                    <span style="font-weight: 600;">{{ total_clientes }}</span>
+                </div>
+                <div style="height: 6px; background: var(--border); border-radius: 3px;">
+                    <div style="width: 70%; height: 100%; background: var(--primary); border-radius: 3px;"></div>
+                </div>
+            </div>
+            <div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.875rem; margin-bottom: 4px;">
+                    <span>Produtos</span>
+                    <span style="font-weight: 600;">{{ total_produtos }}</span>
+                </div>
+                <div style="height: 6px; background: var(--border); border-radius: 3px;">
+                    <div style="width: 85%; height: 100%; background: var(--success); border-radius: 3px;"></div>
+                </div>
+            </div>
+            <div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.875rem; margin-bottom: 4px;">
+                    <span>Fornecedores</span>
+                    <span style="font-weight: 600;">{{ total_fornecedores }}</span>
+                </div>
+                <div style="height: 6px; background: var(--border); border-radius: 3px;">
+                    <div style="width: 45%; height: 100%; background: var(--warning); border-radius: 3px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AÇÕES RÁPIDAS MODERNAS -->
+<div style="margin-top: 2rem;">
+    <div class="card-header" style="padding: 0 0 1rem 0;">
+        <span class="card-title">Ações Rápidas</span>
+        <span class="badge">atalhos</span>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
+        
+        <a href="{% url 'criar_clientes' %}" class="card" style="text-decoration: none; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 1.5rem;">
+            <div style="width: 48px; height: 48px; background: rgba(100, 181, 246, 0.1); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 1.5rem;">
+                👥
+            </div>
+            <div>
+                <h3 style="font-weight: 600; color: var(--dark); margin-bottom: 4px;">Novo Cliente</h3>
+                <p style="color: var(--gray); font-size: 0.875rem;">Adicionar cliente ao sistema</p>
+            </div>
+            <span class="badge" style="margin-top: auto; background: var(--light);">+ criar</span>
+        </a>
+        
+        <a href="{% url 'criar_produtos' %}" class="card" style="text-decoration: none; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 1.5rem;">
+            <div style="width: 48px; height: 48px; background: rgba(76, 175, 80, 0.1); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: var(--success); font-size: 1.5rem;">
+                📦
+            </div>
+            <div>
+                <h3 style="font-weight: 600; color: var(--dark); margin-bottom: 4px;">Novo Produto</h3>
+                <p style="color: var(--gray); font-size: 0.875rem;">Cadastrar produto no estoque</p>
+            </div>
+            <span class="badge" style="margin-top: auto; background: var(--light);">+ adicionar</span>
+        </a>
+        
+        <a href="{% url 'criar_fornecedores' %}" class="card" style="text-decoration: none; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 1.5rem;">
+            <div style="width: 48px; height: 48px; background: rgba(255, 152, 0, 0.1); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: var(--warning); font-size: 1.5rem;">
+                🚚
+            </div>
+            <div>
+                <h3 style="font-weight: 600; color: var(--dark); margin-bottom: 4px;">Novo Fornecedor</h3>
+                <p style="color: var(--gray); font-size: 0.875rem;">Registrar novo parceiro</p>
+            </div>
+            <span class="badge" style="margin-top: auto; background: var(--light);">+ criar</span>
+        </a>
+        
+    </div>
+</div>
+
+<!-- BLOCO DE INFORMAÇÕES DO SISTEMA REDESIGNADO -->
+<div style="margin-top: 2rem;">
+    <div class="card" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); border: none;">
+        <div style="display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;">
+            <div style="width: 56px; height: 56px; background: rgba(255,255,255,0.1); border-radius: 20px; display: flex; align-items: center; justify-content: center;">
+                <span style="color: white; font-size: 2rem;">ℹ️</span>
+            </div>
+            <div style="flex: 1;">
+                <h4 style="color: white; margin-bottom: 0.5rem; font-weight: 600;">
+                    Sistema de Gestão de Vendas
+                </h4>
+                <p style="color: rgba(255,255,255,0.8); font-size: 0.95rem; margin: 0;">
+                    Utilize o menu lateral para gerenciar clientes, produtos e fornecedores. 
+                    Este dashboard apresenta um resumo em tempo real das informações cadastradas.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

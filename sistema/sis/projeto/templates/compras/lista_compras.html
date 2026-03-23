@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Compras{% endblock %}
+
+{% block content %}
+
+<div class="page-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--light); padding-bottom: 12px; margin-bottom: 18px;">
+    <div>
+        <h2 style="margin: 0;">Compras</h2>
+        <p style="color: var(--secondary); font-size:0.9rem; margin: 5px 0 0 0;">
+            Gerencie as compras dos fornecedores
+        </p>
+    </div>
+    <div>
+        <a href="{% url 'compras:criar' %}" class="btn btn-primary">+ Nova Compra</a>
+    </div>
+</div>
+
+<div class="table-container" style="background: white; border-radius: 10px; padding: 20px; overflow-x: auto;">
+    <table style="width: 100%;">
+        <thead>
+            <tr style="border-bottom: 2px solid var(--border);">
+                <th>Nº Nota</th>
+                <th>Fornecedor</th>
+                <th>Data</th>
+                <th>Valor</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for compra in compras %}
+            <tr style="border-bottom: 1px solid var(--border);">
+                <td>{{ compra.numero_nota }}</td>
+                <td>{{ compra.fornecedor.nome }}</td>
+                <td>{{ compra.data_compra|date:"d/m/Y" }}</td>
+                <td>R$ {{ compra.valor_total }}</td>
+                <td>
+                    <span class="badge {% if compra.status == 'concluida' %}badge-success{% else %}badge-warning{% endif %}">
+                        {{ compra.get_status_display }}
+                    </span>
+                </td>
+                <td>
+                    {% if compra.status == 'pendente' %}
+                    <a href="{% url 'compras:adicionar_itens' compra.id %}" class="btn btn-sm">Editar</a>
+                    <a href="{% url 'compras:finalizar' compra.id %}" class="btn btn-success btn-sm">Finalizar</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" style="text-align: center;">Nenhuma compra cadastrada</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

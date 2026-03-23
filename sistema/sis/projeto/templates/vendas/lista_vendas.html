@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Vendas{% endblock %}
+
+{% block content %}
+
+<div class="page-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--light); padding-bottom: 12px; margin-bottom: 18px;">
+    <div>
+        <h2 style="margin: 0;">Vendas</h2>
+        <p style="color: var(--secondary); font-size:0.9rem; margin: 5px 0 0 0;">
+            Gerencie as vendas realizadas para os clientes
+        </p>
+    </div>
+    <div>
+        <a href="{% url 'vendas:criar' %}" style="background: var(--accent); color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block;">
+            + Nova Venda
+        </a>
+    </div>
+</div>
+
+<div style="background: white; border-radius: 10px; padding: 20px; overflow-x: auto; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="border-bottom: 2px solid var(--border);">
+                <th style="padding: 12px; text-align: left;">ID</th>
+                <th style="padding: 12px; text-align: left;">Cliente</th>
+                <th style="padding: 12px; text-align: left;">Data Venda</th>
+                <th style="padding: 12px; text-align: left;">Valor Total</th>
+                <th style="padding: 12px; text-align: left;">Desconto</th>
+                <th style="padding: 12px; text-align: left;">Valor Final</th>
+                <th style="padding: 12px; text-align: left;">Status</th>
+                <th style="padding: 12px; text-align: left;">Ações</th>
+             </tr>
+        </thead>
+        <tbody>
+            {% for venda in vendas %}
+            <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding: 12px;">#{{ venda.id }}</td>
+                <td style="padding: 12px;">{{ venda.cliente.nome }}</td>
+                <td style="padding: 12px;">{{ venda.data_venda|date:"d/m/Y" }}</td>
+                <td style="padding: 12px;">R$ {{ venda.valor_total|floatformat:2 }}</td>
+                <td style="padding: 12px;">R$ {{ venda.desconto|floatformat:2 }}</td>
+                <td style="padding: 12px;"><strong>R$ {{ venda.valor_final|floatformat:2 }}</strong></td>
+                <td style="padding: 12px;">
+                    {% if venda.status == 'confirmada' or venda.status == 'entregue' %}
+                        <span style="padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; background: #2ecc71; color: white;">{{ venda.get_status_display }}</span>
+                    {% elif venda.status == 'pendente' %}
+                        <span style="padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; background: #f39c12; color: white;">{{ venda.get_status_display }}</span>
+                    {% elif venda.status == 'cancelada' %}
+                        <span style="padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; background: #e74c3c; color: white;">{{ venda.get_status_display }}</span>
+                    {% else %}
+                        <span style="padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; background: #3498db; color: white;">{{ venda.get_status_display }}</span>
+                    {% endif %}
+                </td>
+                <td style="padding: 12px;">
+                    <a href="{% url 'vendas:detalhes' venda.id %}" style="background: var(--accent); color: white; padding: 5px 10px; border-radius: 3px; text-decoration: none; margin-right: 5px; font-size: 0.8rem; display: inline-block;">Ver</a>
+                    {% if venda.status == 'pendente' %}
+                    <a href="{% url 'vendas:adicionar_itens' venda.id %}" style="background: var(--primary); color: white; padding: 5px 10px; border-radius: 3px; text-decoration: none; margin-right: 5px; font-size: 0.8rem; display: inline-block;">Editar</a>
+                    <a href="{% url 'vendas:finalizar' venda.id %}" style="background: #2ecc71; color: white; padding: 5px 10px; border-radius: 3px; text-decoration: none; font-size: 0.8rem; display: inline-block;">Finalizar</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8" style="padding: 40px; text-align: center; color: var(--secondary);">
+                    Nenhuma venda registrada. Clique em "Nova Venda" para começar.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
